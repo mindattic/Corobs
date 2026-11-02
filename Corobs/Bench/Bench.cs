@@ -29,10 +29,13 @@ public static class Bench
     {
         if (holdoutFraction <= 0 || holdoutFraction >= 1) throw new ArgumentOutOfRangeException(nameof(holdoutFraction));
         var cmp = comparer ?? EqualityComparer<TId>.Default;
-        var truth = new HashSet<(TId, TId)>(truePairs.Select(Canon), new PairComparer<TId>(cmp));
+        var pairCmp = new PairComparer<TId>(cmp);
+        var truth = new HashSet<(TId, TId)>(truePairs.Select(Canon), pairCmp);
 
         var prng = new SeededPrng(seed);
-        var shuffled = truePairs.ToArray();
+        // Distinct pairs only (first occurrence kept, so input without duplicates shuffles as before):
+        // a pair listed twice, or both ways round, is one relationship, not two to hide.
+        var shuffled = truePairs.Select(Canon).Distinct(pairCmp).ToArray();
         for (var i = shuffled.Length - 1; i > 0; i--) { var j = prng.Next(i + 1); (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]); }
         var hidden = shuffled.Take((int)Math.Round(shuffled.Length * holdoutFraction)).Select(Canon).ToArray();
         var hiddenSet = new HashSet<(TId, TId)>(hidden, new PairComparer<TId>(cmp));
@@ -92,7 +95,10 @@ public static class Bench
 
     private sealed class PairComparer<TId>(IEqualityComparer<TId> inner) : IEqualityComparer<(TId, TId)> where TId : notnull
     {
-        public bool Equals((TId, TId) x, (TId, TId) y) => inner.Equals(x.Item1, y.Item1) && inner.Equals(x.Item2, y.Item2);
-        public int GetHashCode((TId, TId) p) => HashCode.Combine(inner.GetHashCode(p.Item1), inner.GetHashCode(p.Item2));
+        // Unordered: (a, b) and (b, a) are one pair under the caller's comparer, whatever ToString says.
+        public bool Equals((TId, TId) x, (TId, TId) y)
+            => (inner.Equals(x.Item1, y.Item1) && inner.Equals(x.Item2, y.Item2))
+            || (inner.Equals(x.Item1, y.Item2) && inner.Equals(x.Item2, y.Item1));
+        public int GetHashCode((TId, TId) p) => inner.GetHashCode(p.Item1) ^ inner.GetHashCode(p.Item2);
     }
 }

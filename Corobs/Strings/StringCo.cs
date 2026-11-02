@@ -81,6 +81,8 @@ public sealed class StringCo
         }
         else
         {
+            // Infinity has no place on a ring: t − o − Floor(t − o) would be NaN in every dimension.
+            if (double.IsInfinity(t)) throw new ArgumentOutOfRangeException(nameof(t));
             for (var i = 0; i < c.Length; i++)
             {
                 var phase = t - _o[i];
