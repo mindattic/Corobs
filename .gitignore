@@ -1,0 +1,12 @@
+bin/
+obj/
+*.user
+.vs/
+out/
+[Tt]est[Rr]esults/
+.claude/quicksave.md
+/artifacts/
+.agent/agent-session.json*
+.agent/agent-queue.json*
+# the private reference copy of the book (its own repo, mindattic/Corobs-Book) — never public
+/book/

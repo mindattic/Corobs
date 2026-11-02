@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+    <RootNamespace>Corobs</RootNamespace>
+    <PackageId>Corobs</PackageId>
+    <Version>0.1.0</Version>
+    <Description>COROBS — Correlithm Object technology as a pure, deterministic .NET library: unit N-cube statistics, correlithm objects (soft tokens), string COs, converters, pattern and rule mining, cueing and benchmarking. No I/O, no database, no LLM.</Description>
+    <PackageTags>mindattic;corobs;correlithm;high-dimensional;similarity;anomaly</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Corobs.Tests" />
+  </ItemGroup>
+
+</Project>
