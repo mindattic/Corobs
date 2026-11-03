@@ -86,13 +86,6 @@ pattern, accepting a rule and resolving a hit are the caller's decisions, carrie
    nobody touched.
 6. `Bench` says whether this beat whatever you did before, on the same hidden ground truth.
 
-## Consumers
-
-- **Prose** (`mindattic/Prose`, RFC 0016) — the GLMZ fiction universe: ~14,000 entities become
-  trajectories through story-time, shared incidents become time-scoped patterns their witnesses are
-  pulled toward, an old-way-vs-COROBS bench, and a version grader for books, series and the universe.
-  Prose keeps its own adapters (record → ply converters, storage, CLI, wiki) on its side of the line.
-
 ## Attribution and rights
 
 Correlithm Object technology is the work of **Dr. Patrick Nick Lawrence**. The theory, the

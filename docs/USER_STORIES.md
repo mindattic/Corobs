@@ -23,3 +23,7 @@ _Nothing recorded yet._
 |---|---|---|---|---|---|
 | COR-T1 | 2026-11-01 | docs | closed | Start the permanent ticket log in the ticket database | — |
 | COR-T2 | 2026-11-01 | feature | closed | Corobs: scaffold the pure Correlithm-Object library repo (solution, library, tests, source book in assets, house files) | 28a6c9a |
+| COR-T3 | 2026-11-02 | docs | open | test probe - will delete | — |
+| COR-T4 | 2026-11-02 | fix | closed | Bughunt sweep, two passes: find and fix real bugs across tracked source (user request 2026-11-02) | — |
+| COR-T5 | 2026-11-02 | fix | closed | Fix the open items the 2026-11-02 bughunt left for decision (ContinuousConverter wraps: Infinity like NaN) | — |
+| COR-T6 | 2026-11-03 | docs | closed | Document every public member against the book; move Prose-specific consumer content out to Prose's own RFC | — |

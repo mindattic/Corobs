@@ -12,8 +12,11 @@ public sealed class SeededPrng
 {
     private ulong _s0, _s1, _s2, _s3;
 
+    /// <summary>The root seed this stream (or <see cref="Derive"/> chain) was built from.</summary>
     public long Seed { get; }
 
+    /// <summary>A fresh stream seeded from <paramref name="seed"/>; the same seed always produces the
+    /// same sequence of <see cref="NextUInt64"/>/<see cref="NextDouble"/>/<see cref="Next"/> calls.</summary>
     public SeededPrng(long seed)
     {
         Seed = seed;
@@ -29,6 +32,8 @@ public sealed class SeededPrng
     /// how a converter gets one fixed point per category value (<c>PRNG(seed, ply, value)</c>).</summary>
     public SeededPrng Derive(string label) => new(unchecked((long)Fnv1a64(Seed, label)));
 
+    /// <summary>The next raw 64-bit word of the xoshiro256** stream; <see cref="NextDouble"/> and
+    /// <see cref="Next"/> are built on this.</summary>
     public ulong NextUInt64()
     {
         var result = RotL(_s1 * 5, 7) * 9;

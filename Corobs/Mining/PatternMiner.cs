@@ -11,9 +11,13 @@ namespace Corobs.Mining;
 /// </summary>
 public sealed class PatternMiner
 {
+    /// <summary>The linking threshold, in σ below standard distance (default 6, ≈ 52 bits).</summary>
     public double MinDeviations { get; }
+    /// <summary>The smallest cluster size kept as a pattern (default 5).</summary>
     public int MinMembers { get; }
 
+    /// <summary>A miner that links points at <paramref name="minDeviations"/> σ below standard
+    /// distance and keeps clusters of at least <paramref name="minMembers"/>.</summary>
     public PatternMiner(double minDeviations = 6, int minMembers = 5)
     {
         if (minDeviations <= 0) throw new ArgumentOutOfRangeException(nameof(minDeviations));
@@ -22,6 +26,9 @@ public sealed class PatternMiner
         MinMembers = minMembers;
     }
 
+    /// <summary>The patterns found among <paramref name="points"/> (all on the same ply), ordered by
+    /// bits descending then by first member under <paramref name="order"/> (the default comparer when
+    /// null); <paramref name="equality"/> is passed through to each <see cref="Pattern{TId}"/>.</summary>
     public IReadOnlyList<Pattern<TId>> Mine<TId>(IReadOnlyList<PlyPoint<TId>> points, IComparer<TId>? order = null, IEqualityComparer<TId>? equality = null)
         where TId : notnull
     {

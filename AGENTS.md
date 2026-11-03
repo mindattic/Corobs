@@ -8,8 +8,8 @@ not add a second copy under a provider-specific command folder.
 
 - **COROBS is pure.** `Corobs/` references no MindAttic application, no database, no network and
   no LLM client. Everything is deterministic under a seed: same seed, same inputs, same bits. A test
-  asserts the project file carries no such reference. Consumers (Prose first — see
-  `Prose/docs/rfc/0016-corobs.md`) write their own adapters on their side of the line.
+  asserts the project file carries no such reference. Consumers write their own adapters on their
+  side of the line, and document why they use this library in their own repository, not here.
 - **The source book is the specification.** Dr. P. Nick Lawrence's *Correlithm Object Technology*
   (2004) lives in the private companion repo `mindattic/Corobs-Book`, checked out at `book/` here
   (git-ignored). Cite chapter and equation (e.g. Table II-1, Eq. III-H) in code comments and tests

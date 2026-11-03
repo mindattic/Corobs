@@ -8,6 +8,7 @@ namespace Corobs.Mining;
 public sealed record Rule<TId>(string SourcePly, Pattern<TId> Source, string TargetPly, Pattern<TId> Target, double Support, double Bits)
     where TId : notnull
 {
+    /// <summary>The rule's plies, pattern sizes, support and bits, for logs and reports.</summary>
     public override string ToString() => $"{SourcePly}.[{Source.Members.Count}] >: {TargetPly}.[{Target.Members.Count}] support {Support:P0}, {Bits:F1} bits";
 }
 
@@ -18,14 +19,20 @@ public sealed record Rule<TId>(string SourcePly, Pattern<TId> Source, string Tar
 /// </summary>
 public sealed class RuleMiner
 {
+    /// <summary>The smallest share of a source pattern's members that must land in the best target
+    /// pattern for a rule to be proposed (default 0.8).</summary>
     public double MinSupport { get; }
 
+    /// <summary>A miner that proposes rules whose support reaches <paramref name="minSupport"/>.</summary>
     public RuleMiner(double minSupport = 0.8)
     {
         if (minSupport <= 0 || minSupport > 1) throw new ArgumentOutOfRangeException(nameof(minSupport));
         MinSupport = minSupport;
     }
 
+    /// <summary>The rules from <paramref name="sourcePly"/>'s patterns (<paramref name="source"/>) to
+    /// <paramref name="targetPly"/>'s (<paramref name="target"/>) that reach <see cref="MinSupport"/>,
+    /// ordered by bits descending.</summary>
     public IReadOnlyList<Rule<TId>> Mine<TId>(string sourcePly, IReadOnlyList<Pattern<TId>> source, string targetPly, IReadOnlyList<Pattern<TId>> target)
         where TId : notnull
     {

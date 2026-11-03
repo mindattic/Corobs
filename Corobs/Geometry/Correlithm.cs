@@ -11,12 +11,17 @@ public sealed class Correlithm : IEquatable<Correlithm>
 {
     private readonly double[] _c;
 
+    /// <summary>N: the dimensionality of the cube this point lives in. All the N-cube statistics
+    /// (<see cref="NCube"/>) are a function of this number.</summary>
     public int Dimensions => _c.Length;
 
+    /// <summary>The coordinate on one dimension, in [0, 1].</summary>
     public double this[int dimension] => _c[dimension];
 
+    /// <summary>All N coordinates, in order.</summary>
     public ReadOnlySpan<double> Coordinates => _c;
 
+    /// <summary>A point at exactly these coordinates; each must lie in [0, 1].</summary>
     public Correlithm(ReadOnlySpan<double> coordinates)
     {
         if (coordinates.Length == 0) throw new ArgumentException("A point needs at least one coordinate.", nameof(coordinates));
@@ -45,6 +50,7 @@ public sealed class Correlithm : IEquatable<Correlithm>
         return new Correlithm(c);
     }
 
+    /// <summary>Euclidean distance squared to <paramref name="other"/>, from the same cube.</summary>
     public double SquaredDistanceTo(Correlithm other)
     {
         CheckSame(other);
@@ -54,6 +60,8 @@ public sealed class Correlithm : IEquatable<Correlithm>
         return s;
     }
 
+    /// <summary>Euclidean distance to <paramref name="other"/> — compare against
+    /// <see cref="NCube.StandardDistance"/> to read it as information (<see cref="NCube.BitContent"/>).</summary>
     public double DistanceTo(Correlithm other) => Math.Sqrt(SquaredDistanceTo(other));
 
     /// <summary>Linear interpolation by <paramref name="fraction"/> from this point toward
@@ -88,10 +96,14 @@ public sealed class Correlithm : IEquatable<Correlithm>
     /// point would be (Ch. VIII, Superposition).</summary>
     public static Correlithm Superpose(IReadOnlyCollection<Correlithm> points) => Centroid(points);
 
+    /// <summary>True when every coordinate matches exactly — not a proximity test. Two independently
+    /// drawn points are, by the book's statistics, never equal; use <see cref="DistanceTo"/> for that.</summary>
     public bool Equals(Correlithm? other) => other is not null && _c.AsSpan().SequenceEqual(other._c);
 
+    /// <inheritdoc cref="Equals(Correlithm?)"/>
     public override bool Equals(object? obj) => Equals(obj as Correlithm);
 
+    /// <summary>Consistent with <see cref="Equals(Correlithm?)"/>: equal points hash equal.</summary>
     public override int GetHashCode()
     {
         var h = new HashCode();
@@ -99,6 +111,7 @@ public sealed class Correlithm : IEquatable<Correlithm>
         return h.ToHashCode();
     }
 
+    /// <summary>Just the dimensionality; coordinates are not meant to be read as text.</summary>
     public override string ToString() => $"CO[{Dimensions}]";
 
     private void CheckSame(Correlithm other)

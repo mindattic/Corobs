@@ -23,6 +23,7 @@ public sealed class StringCo
     private readonly double[] _a, _b, _o;
     private readonly double[]? _dx, _dy;
 
+    /// <summary>N: the dimensionality of the cube this geometry is embedded in.</summary>
     public int Dimensions => _a.Length;
 
     private StringCo(Kind kind, double[] a, double[] b, double[] o, double[]? dx, double[]? dy)

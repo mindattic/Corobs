@@ -5,7 +5,9 @@ namespace Corobs.Bench;
 /// <summary>How well a neighbour function recovers relationships that were hidden from it.</summary>
 public sealed record RecallResult(int Hidden, int Recovered, int Predicted, int PredictedTrue)
 {
+    /// <summary>Share of the hidden pairs that the predictor recovered.</summary>
     public double Recall => Hidden == 0 ? 0 : Recovered / (double)Hidden;
+    /// <summary>Share of the predictor's own guesses that were actually true (anywhere in the full truth).</summary>
     public double Precision => Predicted == 0 ? 0 : PredictedTrue / (double)Predicted;
 }
 

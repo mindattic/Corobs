@@ -10,6 +10,7 @@ namespace Corobs.Mining;
 public sealed record Hit<TId>(TId Id, Rule<TId> Rule, double SourceDistance, double TargetDistance, double Bits, int Rank)
     where TId : notnull
 {
+    /// <summary>The hit's rank, id and bits against the rule it violates, for logs and reports.</summary>
     public override string ToString() => $"#{Rank} {Id}: {Bits:F1} bits — {Rule}";
 }
 
@@ -21,8 +22,11 @@ public sealed record Hit<TId>(TId Id, Rule<TId> Rule, double SourceDistance, dou
 /// </summary>
 public sealed class Cue
 {
+    /// <summary>How close to the target centroid, in σ below standard distance, a member must land to
+    /// not count as a hit (default 1).</summary>
     public double TargetDeviations { get; }
 
+    /// <summary>A cueing instrument using <paramref name="targetDeviations"/> as the pass/fail line.</summary>
     public Cue(double targetDeviations = 1)
     {
         if (targetDeviations < 0) throw new ArgumentOutOfRangeException(nameof(targetDeviations));
