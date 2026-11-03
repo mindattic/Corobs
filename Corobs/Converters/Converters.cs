@@ -121,8 +121,10 @@ public sealed class ContinuousConverter : IConverter<double?>
     public Correlithm Convert(double? value)
     {
         if (value is null || double.IsNaN(value.Value)) return Missing;
-        // A ring has no position for +/-Infinity (every phase is undefined), so like NaN it is missing.
+#if !COROBS_BUG_COR_T5
+        // COR-T5 (docs/BUGS.md, a decision, not a proven error): a ring has no phase for infinity.
         if (_wraps && double.IsInfinity(value.Value)) return Missing;
+#endif
         var t = (value.Value - _min) / (_max - _min);
         return _string.At(t);
     }

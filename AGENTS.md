@@ -23,13 +23,15 @@ not add a second copy under a provider-specific command folder.
 - **Bugs are fixed here, proven and catalogued.** A divergence from the book, or a plain defect, is
   fixed in Corobs itself, never worked around in an extension. Every fix:
   1. carries its own ticket (`tickets ticket new --type fix`), cited in the commit;
-  2. keeps the old code beside the new behind a per-ticket compiler symbol,
-     `#if COROBS_BUG_COR_Tn` (old, wrong) / `#else` (fixed) / `#endif`, with a one-line comment
-     naming the ticket;
-  3. adds a test in `Corobs.Tests/Bugs/` named for the ticket that asserts the correct behaviour on
-     the input that broke it, citing the book where the correct number comes from there.
-  The default build compiles the fix and the test passes. Building with the symbol
-  (`dotnet test -p:DefineConstants=COROBS_BUG_COR_Tn`) compiles the old code and the same test must
-  fail. That failure is the empirical proof the old way was wrong.
+  2. keeps the old code beside the new behind its own compiler symbol, `COROBS_BUG_COR_Tn[_PART]`:
+     `#if SYMBOL` (old) / `#else` (fixed) / `#endif`, or `#if !SYMBOL` around code the fix only
+     added, with a one-line comment naming the ticket and docs/BUGS.md;
+  3. adds a test in `Corobs.Tests/Bugs/` that asserts an invariant (from the book where one
+     applies), not the new implementation;
+  4. records the proof in `docs/BUGS.md`. The proof is mathematical, checked against the book (PDF
+     for equations), and classifies the fix as book divergence, implementation defect, or decision.
+     A decision has no proof, so it is labelled as one and left for the owner to keep or revert.
+  The default build compiles the fix and the test passes. `dotnet test -p:CorobsBugs=SYMBOL`
+  compiles the old code and the same test must fail. That failure is the empirical proof.
 - **Measurement, never judgment.** This library ranks and cues; it never decides. Confirmation of a
   pattern or rule, and resolution of a hit, are the caller's hand decisions carrying an id.

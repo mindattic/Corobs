@@ -35,9 +35,12 @@ public static class Bench
         var truth = new HashSet<(TId, TId)>(truePairs.Select(Canon), pairCmp);
 
         var prng = new SeededPrng(seed);
-        // Distinct pairs only (first occurrence kept, so input without duplicates shuffles as before):
-        // a pair listed twice, or both ways round, is one relationship, not two to hide.
+#if COROBS_BUG_COR_T4_PAIRS
+        var shuffled = truePairs.ToArray();
+#else
+        // COR-T4 (docs/BUGS.md): a pair listed twice, or both ways round, is one relationship to hide.
         var shuffled = truePairs.Select(Canon).Distinct(pairCmp).ToArray();
+#endif
         for (var i = shuffled.Length - 1; i > 0; i--) { var j = prng.Next(i + 1); (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]); }
         var hidden = shuffled.Take((int)Math.Round(shuffled.Length * holdoutFraction)).Select(Canon).ToArray();
         var hiddenSet = new HashSet<(TId, TId)>(hidden, new PairComparer<TId>(cmp));
@@ -97,10 +100,15 @@ public static class Bench
 
     private sealed class PairComparer<TId>(IEqualityComparer<TId> inner) : IEqualityComparer<(TId, TId)> where TId : notnull
     {
-        // Unordered: (a, b) and (b, a) are one pair under the caller's comparer, whatever ToString says.
+#if COROBS_BUG_COR_T4_PAIRS
+        public bool Equals((TId, TId) x, (TId, TId) y) => inner.Equals(x.Item1, y.Item1) && inner.Equals(x.Item2, y.Item2);
+        public int GetHashCode((TId, TId) p) => HashCode.Combine(inner.GetHashCode(p.Item1), inner.GetHashCode(p.Item2));
+#else
+        // COR-T4 (docs/BUGS.md): unordered, so (a, b) and (b, a) are one pair under the caller's comparer.
         public bool Equals((TId, TId) x, (TId, TId) y)
             => (inner.Equals(x.Item1, y.Item1) && inner.Equals(x.Item2, y.Item2))
             || (inner.Equals(x.Item1, y.Item2) && inner.Equals(x.Item2, y.Item1));
         public int GetHashCode((TId, TId) p) => inner.GetHashCode(p.Item1) ^ inner.GetHashCode(p.Item2);
+#endif
     }
 }

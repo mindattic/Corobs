@@ -9,6 +9,8 @@
     <PackageTags>mindattic;corobs;correlithm;high-dimensional;similarity;anomaly</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>true</IsPackable>
+    <!-- docs/BUGS.md: dotnet test -p:CorobsBugs=COROBS_BUG_COR_Tn_X rebuilds a fixed bug's old code. -->
+    <DefineConstants>$(DefineConstants);$(CorobsBugs)</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

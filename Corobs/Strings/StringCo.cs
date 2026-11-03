@@ -82,8 +82,10 @@ public sealed class StringCo
         }
         else
         {
-            // Infinity has no place on a ring: t − o − Floor(t − o) would be NaN in every dimension.
+#if !COROBS_BUG_COR_T4_RING
+            // COR-T4 (docs/BUGS.md): infinity has no phase; the old path returned a point off the ring.
             if (double.IsInfinity(t)) throw new ArgumentOutOfRangeException(nameof(t));
+#endif
             for (var i = 0; i < c.Length; i++)
             {
                 var phase = t - _o[i];

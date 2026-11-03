@@ -28,3 +28,4 @@ _Nothing recorded yet._
 | COR-T5 | 2026-11-02 | fix | closed | Fix the open items the 2026-11-02 bughunt left for decision (ContinuousConverter wraps: Infinity like NaN) | — |
 | COR-T6 | 2026-11-03 | docs | closed | Document every public member against the book; move Prose-specific consumer content out to Prose's own RFC | — |
 | COR-T7 | 2026-11-03 | docs | closed | Codify core-stays-pristine and proven, catalogued bug-fix policy in AGENTS.md | — |
+| COR-T8 | 2026-11-03 | chore | closed | Retrofit COR-T4/COR-T5 fixes to the bug policy: old code behind per-fix symbols, invariant tests, proofs in docs/BUGS.md | — |

@@ -37,8 +37,10 @@ public sealed class PatternMiner
         var cmp = order ?? Comparer<TId>.Default;
         var sorted = points.OrderBy(p => p.Id, cmp).ToArray();
         var threshold = NCube.DistanceAtDeviations(n, MinDeviations);
-        // Below zero no pair can be that close; squaring a negative threshold would link points anyway.
+#if !COROBS_BUG_COR_T4_THRESHOLD
+        // COR-T4 (docs/BUGS.md): distance is never negative, so a negative threshold links nothing.
         if (threshold < 0) return [];
+#endif
         var thresholdSq = threshold * threshold;
 
         var parent = new int[sorted.Length];
