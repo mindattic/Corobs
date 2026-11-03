@@ -27,3 +27,4 @@ _Nothing recorded yet._
 | COR-T4 | 2026-11-02 | fix | closed | Bughunt sweep, two passes: find and fix real bugs across tracked source (user request 2026-11-02) | — |
 | COR-T5 | 2026-11-02 | fix | closed | Fix the open items the 2026-11-02 bughunt left for decision (ContinuousConverter wraps: Infinity like NaN) | — |
 | COR-T6 | 2026-11-03 | docs | closed | Document every public member against the book; move Prose-specific consumer content out to Prose's own RFC | — |
+| COR-T7 | 2026-11-03 | docs | closed | Codify core-stays-pristine and proven, catalogued bug-fix policy in AGENTS.md | — |
