@@ -83,6 +83,7 @@ public sealed class ContinuousConverter : IConverter<double?>
 {
     private readonly StringCo _string;
     private readonly double _min, _max;
+    private readonly bool _wraps;
 
     public int Dimensions { get; }
     public Correlithm Missing { get; }
@@ -91,7 +92,7 @@ public sealed class ContinuousConverter : IConverter<double?>
     {
         if (!(max > min)) throw new ArgumentException("max must exceed min.", nameof(max));
         _string = wraps ? StringCo.Ring(prng, dimensions) : StringCo.Line(prng, dimensions);
-        (_min, _max) = (min, max);
+        (_min, _max, _wraps) = (min, max, wraps);
         Dimensions = dimensions;
         Missing = Correlithm.Midpoint(dimensions);
     }
@@ -99,6 +100,8 @@ public sealed class ContinuousConverter : IConverter<double?>
     public Correlithm Convert(double? value)
     {
         if (value is null || double.IsNaN(value.Value)) return Missing;
+        // A ring has no position for +/-Infinity (every phase is undefined), so like NaN it is missing.
+        if (_wraps && double.IsInfinity(value.Value)) return Missing;
         var t = (value.Value - _min) / (_max - _min);
         return _string.At(t);
     }
