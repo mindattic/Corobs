@@ -1,0 +1,15 @@
+[package]
+name = "corobs"
+version = "0.1.0"
+edition = "2021"
+description = "COROBS: Correlithm Object technology as a pure, deterministic Rust library. Unit N-cube statistics, correlithm objects (soft tokens), string COs, converters, pattern and rule mining, cueing and benchmarking. No I/O, no database, no LLM."
+keywords = ["correlithm", "high-dimensional", "similarity", "anomaly", "deterministic"]
+categories = ["science", "algorithms"]
+authors = ["MindAttic"]
+readme = "README.md"
+
+# Pure: the library depends on nothing (tests/purity.rs asserts this table stays empty).
+[dependencies]
+
+[dev-dependencies]
+serde_json = { version = "1", features = ["float_roundtrip"] }
