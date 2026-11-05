@@ -99,13 +99,44 @@ This library is an independent implementation written from the published descrip
 affiliated with, endorsed by, or derived from code of Lawrence Technologies, LLC. Synthorg® is their
 trademark. If you build on this work, cite the book.
 
+## Languages
+
+One library, one behaviour, every stack. C# is the reference implementation; every other language is
+a port of it that reproduces the reference **bit for bit** under the same seed, checked against the
+shared [conformance vectors](conformance/README.md).
+
+| Profile | Folder | Build | Tests |
+|---|---|---|---|
+| C# (reference) | `Corobs.Csharp/` | .NET 9 / 10 | NUnit |
+| Python | `Corobs.Python/` | Python ≥ 3.10, pure | pytest |
+| C++ | `Corobs.Cpp/` | C++20, CMake | GoogleTest |
+| Java | `Corobs.Java/` | Java 17+, Maven | JUnit 5 |
+| Rust | `Corobs.Rust/` | Cargo, no dependencies | `cargo test` |
+| TypeScript | `Corobs.TypeScript/` | ES2022, Node and browsers | Vitest |
+| Go | `Corobs.Go/` | Go modules | `go test` |
+| Swift | `Corobs.Swift/` | SwiftPM | Swift Testing |
+| Julia | `Corobs.Julia/` | Pkg | `Test` stdlib |
+
+```
+pwsh ./build.ps1 -Profile Rust -Test     # one language, built and tested
+pwsh ./build.ps1 -Profile All            # every language, built
+pwsh ./build.ps1 -Profile Vectors        # regenerate conformance/vectors.json from the reference
+```
+
+Every port has no runtime dependencies (test-only dependencies are allowed), the same namespaces
+(`geometry`, `seeding`, `strings`, `converters`, `mining`, `bench`) in that language's idiom, and the
+book's invariant tests alongside its conformance test.
+
 ## Layout
 
 ```
-Corobs/            the library (net9.0; net10.0, no references)
-Corobs.Tests/      NUnit — the book's statistics checked against the cube, determinism, planted clusters
+Corobs.Csharp/     the reference: Corobs (net9.0; net10.0, no references), Corobs.Tests (NUnit),
+                   Corobs.TestVectors (writes conformance/vectors.json)
+Corobs.<Lang>/     one port per language, each with its own build and tests
+conformance/       vectors.json, the reference's exact outputs, and the rules for comparing them
+build.ps1          build profiles: one language, all of them, or the vectors
 assets/            diagrams and other public assets
-docs/              design notes
+docs/              design notes and the bug ledger
 book/              (not in this repository) the maintainer's private reference copy of the book
 ```
 

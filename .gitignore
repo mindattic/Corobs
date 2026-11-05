@@ -10,3 +10,13 @@ out/
 .agent/agent-queue.json*
 # the private reference copy of the book (its own repo, mindattic/Corobs-Book) — never public
 /book/
+# language ports' build output
+build/
+target/
+node_modules/
+dist/
+.build/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+Manifest.toml

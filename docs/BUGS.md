@@ -2,7 +2,7 @@
 
 Corobs implements Lawrence's *Correlithm Object Technology* (2004) and is otherwise left alone. When a
 defect is fixed, the old code stays in the source behind a compiler symbol, a test in
-`Corobs.Tests/Bugs/` checks an invariant the old code breaks, and the proof is recorded here. Page
+`Corobs.Csharp/Corobs.Tests/Bugs/` checks an invariant the old code breaks, and the proof is recorded here. Page
 numbers are the book's printed pages, checked against the PDF.
 
 Each entry is one of:
@@ -14,8 +14,8 @@ Each entry is one of:
 ## Reproducing the old behaviour
 
 ```
-dotnet test Corobs.Tests                                         # fixed code: all pass
-dotnet test Corobs.Tests -p:CorobsBugs=COROBS_BUG_COR_T4_RING    # old code: that fix's tests fail
+dotnet test Corobs.Csharp/Corobs.Tests                           # fixed code: all pass
+dotnet test Corobs.Csharp/Corobs.Tests -p:CorobsBugs=COROBS_BUG_COR_T4_RING   # old code: that fix's tests fail
 ```
 
 `CorobsBugs` takes any symbol below (several at once as `A%3BB`). Shipping the old behaviour means

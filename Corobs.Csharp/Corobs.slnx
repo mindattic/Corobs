@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="Corobs/Corobs.csproj" />
   <Project Path="Corobs.Tests/Corobs.Tests.csproj" />
+  <Project Path="Corobs.TestVectors/Corobs.TestVectors.csproj" />
 </Solution>

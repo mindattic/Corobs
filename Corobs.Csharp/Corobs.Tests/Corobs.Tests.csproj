@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Corobs\Corobs.csproj" />
+    <ProjectReference Include="..\Corobs.TestVectors\Corobs.TestVectors.csproj" />
   </ItemGroup>
 
   <ItemGroup>

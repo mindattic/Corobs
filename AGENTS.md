@@ -26,12 +26,21 @@ not add a second copy under a provider-specific command folder.
   2. keeps the old code beside the new behind its own compiler symbol, `COROBS_BUG_COR_Tn[_PART]`:
      `#if SYMBOL` (old) / `#else` (fixed) / `#endif`, or `#if !SYMBOL` around code the fix only
      added, with a one-line comment naming the ticket and docs/BUGS.md;
-  3. adds a test in `Corobs.Tests/Bugs/` that asserts an invariant (from the book where one
+  3. adds a test in `Corobs.Csharp/Corobs.Tests/Bugs/` that asserts an invariant (from the book where one
      applies), not the new implementation;
   4. records the proof in `docs/BUGS.md`. The proof is mathematical, checked against the book (PDF
      for equations), and classifies the fix as book divergence, implementation defect, or decision.
      A decision has no proof, so it is labelled as one and left for the owner to keep or revert.
   The default build compiles the fix and the test passes. `dotnet test -p:CorobsBugs=SYMBOL`
   compiles the old code and the same test must fail. That failure is the empirical proof.
+- **One reference, many ports.** `Corobs.Csharp/` is the reference implementation; `Corobs.<Lang>/`
+  folders are ports of it (Python, Cpp, Java, Rust, TypeScript, Go, Swift, Julia). A port
+  reproduces the reference bit for bit and proves it against `conformance/vectors.json`
+  (`conformance/README.md` lists the traps). Behaviour changes land in C# first, then
+  `build.ps1 -Profile Vectors` regenerates the vectors in the same commit, then each port follows.
+  Purity holds in every language: no runtime dependency, test-only dependencies allowed.
+- **The bug ledger lives in the reference only** (owner's decision, 2026-11-05, COR-T9). Old code
+  behind `COROBS_BUG_*` symbols exists only in C#; ports carry the fixed behaviour and the same
+  invariant tests, which pass. A new fix follows the steps above in C#, then is ported as fixed code.
 - **Measurement, never judgment.** This library ranks and cues; it never decides. Confirmation of a
   pattern or rule, and resolution of a hit, are the caller's hand decisions carrying an id.

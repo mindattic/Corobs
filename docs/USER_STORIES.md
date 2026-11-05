@@ -29,3 +29,12 @@ _Nothing recorded yet._
 | COR-T6 | 2026-11-03 | docs | closed | Document every public member against the book; move Prose-specific consumer content out to Prose's own RFC | — |
 | COR-T7 | 2026-11-03 | docs | closed | Codify core-stays-pristine and proven, catalogued bug-fix policy in AGENTS.md | — |
 | COR-T8 | 2026-11-03 | chore | closed | Retrofit COR-T4/COR-T5 fixes to the bug policy: old code behind per-fix symbols, invariant tests, proofs in docs/BUGS.md | — |
+| COR-T9 | 2026-11-05 | feature | open | Restructure into a multi-language repo: C# moves to Corobs.Csharp, root build.ps1 profiles, cross-language conformance vectors generated from the C# reference | — |
+| COR-T10 | 2026-11-05 | feature | open | Port Corobs to Python (Corobs.Python): full library, pytest unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T11 | 2026-11-05 | feature | open | Port Corobs to C++ (Corobs.Cpp): full library, GoogleTest via CMake unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T12 | 2026-11-05 | feature | open | Port Corobs to Java (Corobs.Java): full library, JUnit 5 via Maven unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T13 | 2026-11-05 | feature | open | Port Corobs to Rust (Corobs.Rust): full library, cargo test unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T14 | 2026-11-05 | feature | open | Port Corobs to TypeScript (Corobs.TypeScript): full library, Vitest unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T15 | 2026-11-05 | feature | open | Port Corobs to Go (Corobs.Go): full library, go test unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T16 | 2026-11-05 | feature | open | Port Corobs to Swift (Corobs.Swift): full library, Swift Testing via SwiftPM unit tests, passes conformance/vectors.json bit-for-bit | — |
+| COR-T17 | 2026-11-05 | feature | open | Port Corobs to Julia (Corobs.Julia): full library, Test stdlib via Pkg unit tests, passes conformance/vectors.json bit-for-bit | — |
