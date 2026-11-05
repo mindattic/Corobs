@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "corobs"
+version = "0.1.0"
+description = "COROBS: Correlithm Object technology as a pure, deterministic library (port of the C# reference)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Copyright (c) 2026 MindAttic" }
+authors = [{ name = "MindAttic" }]
+keywords = ["correlithm", "high-dimensional", "similarity", "anomaly"]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+corobs = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
